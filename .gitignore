@@ -1,0 +1,4 @@
+*.work/
+egs/log.*
+egs/exp/tokens/
+__pycache__
