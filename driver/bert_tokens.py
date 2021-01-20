@@ -100,6 +100,8 @@ def main():
         plot_dist_len(train_sent_tokens, args.out_dir)
         plot_dist_len(test_sent_tokens, args.out_dir, "test")
         print("Distribution plotted")
+        import sys
+        sys.exit()
 
     # pad tokens
     if args.stage <= 2:

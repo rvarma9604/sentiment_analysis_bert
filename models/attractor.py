@@ -106,13 +106,11 @@ class BertAttractor(nn.Module):
             lengths.append(sent_len - 1)
         return lengths
 
-class SeqBert(nn.Module):
-    def __init__(self):
-        super(SeqBert, self).__init__()
-        self.bert = BertForSequenceClassification.from_pretrained('bert-base-uncased',
-                                                                  num_labels=3,
-                                                                  output_hidden_states=True)
-
-    def forward(self, input_ids, attention_mask):
+    def cls_embeddings(self, input_ids, attention_mask):
         cls_output, output_hidden_states = self.bert(input_ids=input_ids, attention_mask=attention_mask)
-        return cls_output
+        final_hidden_states = output_hidden_states[-1]
+        
+        # get cls embedding
+        cls_embedding = [states[0].unsqueeze(0) for states in final_hidden_states]
+
+        return torch.cat(cls_embedding)
